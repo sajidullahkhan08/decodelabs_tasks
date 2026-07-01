@@ -1,11 +1,10 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
 const faker = require('faker');
-const { connectDB } = require('../config/db');
-const User = require('../models/User');
+const { connectDB } = require('../projects/project2-database/config/db');
+const User = require('../projects/project2-database/models/User');
 
 /**
- * Seed the database with 10-20 test users for development.
+ * Project 2: Seed the database with 10-20 test users for development.
  */
 const seed = async () => {
   try {
@@ -13,19 +12,18 @@ const seed = async () => {
 
     const existingCount = await User.countDocuments();
     if (existingCount > 0) {
-      console.log(`Database already has ${existingCount} users. Skipping seed.`);
+      console.log(`[Project 2] Database already has ${existingCount} users. Skipping seed.`);
       console.log('Run with FORCE_SEED=true to re-seed.');
       if (process.env.FORCE_SEED !== 'true') {
         process.exit(0);
       }
       await User.deleteMany({});
-      console.log('Existing users cleared.');
+      console.log('[Project 2] Existing users cleared.');
     }
 
     const userCount = faker.datatype.number({ min: 10, max: 20 });
     const users = [];
 
-    // Create admin user
     users.push({
       name: 'Admin User',
       email: 'admin@decodelabs.com',
@@ -46,11 +44,11 @@ const seed = async () => {
 
     await User.insertMany(users);
 
-    console.log(`Seeded ${users.length} users successfully.`);
+    console.log(`[Project 2] Seeded ${users.length} users successfully.`);
     console.log('Admin credentials: admin@decodelabs.com / admin123');
     process.exit(0);
   } catch (error) {
-    console.error('Seed failed:', error.message);
+    console.error('[Project 2] Seed failed:', error.message);
     process.exit(1);
   }
 };

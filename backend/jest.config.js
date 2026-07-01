@@ -5,10 +5,7 @@ module.exports = {
   testTimeout: 30000,
   verbose: true,
   collectCoverageFrom: [
-    'controllers/**/*.js',
-    'middleware/**/*.js',
-    'utils/**/*.js',
-    'models/**/*.js',
+    'projects/**/*.js',
     '!**/node_modules/**',
   ],
 };

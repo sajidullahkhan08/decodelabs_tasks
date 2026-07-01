@@ -1,5 +1,16 @@
 # API Documentation
 
+## Project Mapping
+
+| Project | Module | Endpoints |
+|---------|--------|-----------|
+| **Project 1** — REST API | `projects/project1-rest-api/` | `/health`, `/api/users` |
+| **Project 2** — Database | `projects/project2-database/` | (data layer — no direct routes) |
+| **Project 3** — Authentication | `projects/project3-authentication/` | `/api/auth/*` |
+| **Project 4** — Weather API | `projects/project4-weather-api/` | `/api/weather/*` |
+
+See [PROJECTS.md](../PROJECTS.md) for the full project guide.
+
 ## Base URL
 
 ```

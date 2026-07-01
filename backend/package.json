@@ -1,7 +1,7 @@
 {
   "name": "decodelabs-backend",
   "version": "1.0.0",
-  "description": "Complete backend with REST API, CRUD, Authentication, and External API Integration",
+  "description": "DecodeLabs backend — 4 curriculum projects: REST API, Database, Authentication, Weather API",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

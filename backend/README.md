@@ -1,161 +1,98 @@
 # DecodeLabs Backend
 
-A production-ready Node.js backend covering DecodeLabs Projects 1–4: REST API fundamentals, MongoDB CRUD, JWT authentication, and OpenWeatherMap integration with caching and circuit breaker patterns.
+A production-ready Node.js backend with **four clearly separated curriculum projects**, each in its own module under `projects/`.
 
-## Features
+## The Four Projects
 
-- **Project 1** — Express REST API with health checks and structured error responses
-- **Project 2** — MongoDB/Mongoose CRUD with validation and indexing
-- **Project 3** — JWT auth, bcrypt hashing, HTTP-only cookies, role-based access
-- **Project 4** — OpenWeatherMap integration with caching, rate limiting, and circuit breaker
+| # | Project | Folder | Key Endpoints |
+|---|---------|--------|---------------|
+| 1 | REST API Fundamentals | `projects/project1-rest-api/` | `/health`, `/api/users` |
+| 2 | Database Integration | `projects/project2-database/` | MongoDB, models, validation |
+| 3 | Secure Authentication | `projects/project3-authentication/` | `/api/auth` |
+| 4 | Third-Party API Integration | `projects/project4-weather-api/` | `/api/weather` |
 
-## Tech Stack
-
-- Node.js + Express.js
-- MongoDB + Mongoose
-- JWT + bcryptjs
-- Axios, Helmet, CORS, Morgan, Compression
-- Jest + Supertest for testing
-
-## Quick Start
-
-### Prerequisites
-
-- Node.js >= 16
-- MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/atlas))
-
-### Installation
-
-```bash
-cd backend
-npm install
-cp .env.example .env
-# Edit .env with your values
-```
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PORT` | Server port | `5000` |
-| `NODE_ENV` | Environment | `development` |
-| `MONGODB_URI` | MongoDB connection string | — |
-| `JWT_SECRET` | JWT signing secret | — |
-| `JWT_EXPIRE` | Token expiry | `7d` |
-| `JWT_COOKIE_EXPIRE` | Cookie expiry (days) | `7` |
-| `OPENWEATHER_API_KEY` | OpenWeatherMap API key | — |
-| `OPENWEATHER_BASE_URL` | Weather API base URL | OpenWeatherMap 2.5 |
-| `WEATHER_API_TIMEOUT` | API timeout (ms) | `5000` |
-| `CLIENT_URL` | Frontend origin for CORS | `http://localhost:3000` |
-| `CACHE_TTL` | Cache TTL (ms) | `300000` |
-| `RATE_LIMIT_WINDOW` | Rate limit window (seconds) | `60` |
-| `RATE_LIMIT_MAX` | Max requests per window | `60` |
-
-### Run Development Server
-
-```bash
-npm run dev
-```
-
-Visit [http://localhost:5000/health](http://localhost:5000/health) to verify.
-
-### Seed Database
-
-```bash
-npm run seed
-# Admin: admin@decodelabs.com / admin123
-# Force re-seed: FORCE_SEED=true npm run seed
-```
-
-### Run Tests
-
-```bash
-npm test
-```
-
-### Production
-
-```bash
-NODE_ENV=production npm start
-```
-
-Use a process manager like [PM2](https://pm2.keymetrics.io/) for production deployments.
+See **[PROJECTS.md](PROJECTS.md)** for the complete project guide, file map, and architecture diagram.
 
 ## Project Structure
 
 ```
 backend/
-├── config/db.js           # MongoDB connection
-├── controllers/           # Route handlers
-├── middleware/            # Auth, cache, rate limit, errors
-├── models/User.js         # User schema
-├── routes/                # API route definitions
-├── utils/                 # Validators, circuit breaker
-├── scripts/               # Seed & migrate scripts
-├── tests/                 # Unit & integration tests
-└── server.js              # Application entry point
+├── projects/                          # ← All 4 curriculum projects
+│   ├── index.js                       # Central project registry
+│   ├── project1-rest-api/             # PROJECT 1
+│   ├── project2-database/             # PROJECT 2
+│   ├── project3-authentication/       # PROJECT 3
+│   └── project4-weather-api/          # PROJECT 4
+├── server.js                          # Composes all projects
+├── scripts/                           # Seed & migrate (Project 2)
+├── tests/                             # Tests organized by project
+│   ├── project1/
+│   ├── project2/
+│   ├── project3/
+│   └── project4/
+├── docs/API.md
+├── postman/
+├── PROJECTS.md                        # Project identification guide
+└── package.json
 ```
 
-## API Overview
-
-Base URL: `http://localhost:5000/api`
-
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/health` | Public | Health check |
-| POST | `/auth/register` | Public | Register user |
-| POST | `/auth/login` | Public | Login |
-| POST | `/auth/logout` | Public | Logout |
-| GET | `/auth/me` | User | Current user |
-| PUT | `/auth/updatepassword` | User | Update password |
-| GET | `/users` | Public | List users |
-| POST | `/users` | Admin | Create user |
-| GET | `/users/:id` | User | Get user |
-| PUT | `/users/:id` | Admin | Update user |
-| DELETE | `/users/:id` | Admin | Delete user |
-| GET | `/weather/current` | Public | Current weather |
-| GET | `/weather/forecast` | User | 5-day forecast |
-| POST | `/weather/multiple` | User | Multi-city weather |
-| GET | `/weather/cache/clear` | Admin | Clear weather cache |
-
-See [docs/API.md](docs/API.md) for full API documentation.
-
-## Security
-
-- Password hashing (bcrypt, 10 salt rounds)
-- JWT with HTTP-only, SameSite strict cookies
-- Helmet security headers
-- CORS restricted to `CLIENT_URL`
-- Rate limiting on all routes
-- Input validation and sanitization
-- No secrets in source code or logs
-
-## Testing
+## Quick Start
 
 ```bash
-# Run all tests
-npm test
-
-# Watch mode
-npm run test:watch
+cd backend
+npm install
+cp .env.example .env
+# Fill in MONGODB_URI, JWT_SECRET, OPENWEATHER_API_KEY
+npm run dev
 ```
 
-Tests use `mongodb-memory-server` for isolated database testing and mock external weather API calls.
+Visit [http://localhost:5000/health](http://localhost:5000/health) — the response includes the project name.
 
-## Postman
+On startup, the server logs all four loaded projects:
 
-Import `postman/DecodeLabs-Backend.postman_collection.json` into Postman for ready-to-use API requests.
+```
+═══════════════════════════════════════════════════════════
+  DecodeLabs Backend — All 4 Projects Loaded
+═══════════════════════════════════════════════════════════
+  Project 1: REST API Fundamentals  →  /health, /api/users
+  Project 2: Database Integration       →  MongoDB (...)
+  Project 3: Secure Authentication  →  /api/auth
+  Project 4: Third-Party API Integration  →  /api/weather
+═══════════════════════════════════════════════════════════
+```
 
-## Deployment Checklist
+## Per-Project Documentation
 
-- [ ] Set `NODE_ENV=production`
-- [ ] Use strong `JWT_SECRET`
-- [ ] Configure MongoDB Atlas or managed MongoDB
-- [ ] Set `CLIENT_URL` to production frontend URL
-- [ ] Add valid `OPENWEATHER_API_KEY`
-- [ ] Enable HTTPS (secure cookies auto-enabled in production)
-- [ ] Use PM2 or similar process manager
-- [ ] Set up monitoring and log aggregation
+Each project folder contains its own `README.md`:
+
+- [Project 1 — REST API](projects/project1-rest-api/README.md)
+- [Project 2 — Database](projects/project2-database/README.md)
+- [Project 3 — Authentication](projects/project3-authentication/README.md)
+- [Project 4 — Weather API](projects/project4-weather-api/README.md)
+
+## API Documentation
+
+Full API reference: [docs/API.md](docs/API.md)
+
+Postman collection: [postman/DecodeLabs-Backend.postman_collection.json](postman/DecodeLabs-Backend.postman_collection.json)
+
+## Scripts
+
+```bash
+npm run dev       # Development server (nodemon)
+npm start         # Production server
+npm test          # Run all project tests
+npm run seed      # Seed database (Project 2)
+npm run migrate   # Sync indexes (Project 2)
+```
+
+## Environment Variables
+
+See `.env.example` for all required variables. Minimum required:
+
+- `MONGODB_URI` — MongoDB connection (Project 2)
+- `JWT_SECRET` — JWT signing key (Project 3)
+- `OPENWEATHER_API_KEY` — Weather API key (Project 4)
 
 ## License
 
